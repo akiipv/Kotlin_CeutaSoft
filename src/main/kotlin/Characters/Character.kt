@@ -3,7 +3,6 @@ package org.example.Characters
 import org.example.Combat.Attack
 import org.example.Equipment.*
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 abstract class Character(
@@ -59,9 +58,9 @@ abstract class Character(
         onLevelUp()
     }
 
-    fun attack(): Attack = Attack(calculateTotalStat("ATK"), "PHY")
+    open fun attack(): Attack = Attack(calculateTotalStat("ATK"), "PHY")
 
-    fun defend(attack: Attack) {
+    open fun defend(attack: Attack) {
         var totalDmg: Int = 0
         when (attack.dmgType) {
             "PHY" -> totalDmg = attack.dmgValue - calculateTotalStat("ARM")
@@ -78,7 +77,7 @@ abstract class Character(
         }
     }
 
-    fun takeTurn(): Attack {
+    open fun takeTurn(): Attack {
         var attack: Attack
         if (!isCPU) {
             val scan: Scanner = Scanner(System.`in`)
@@ -94,7 +93,7 @@ abstract class Character(
             print("What would you like to do? ")
             when (scan.nextLine()) {
                 "1" -> attack = attack()
-                "2" -> attack = performSpecialAction()
+                "2" -> attack = performSpecialAction()!!
                 "3" -> {
                     if (isDefending) {
                         isDefending = true
@@ -133,10 +132,20 @@ abstract class Character(
         return TODO()
     }
 
+    override fun compareTo(other: Character): Int {
+        var result = Integer.compare(other.stats.spd, this.stats.spd)
+        if (result == 0) result = Integer.compare(other.lvl, this.lvl)
+        return result
+    }
+
+    open fun equipHeirloom(heirloom: Heirloom): Boolean {
+        TODO()
+    }
+
     protected abstract fun onLevelUp()
     protected abstract fun initializeStats(): Stats
     protected abstract fun displaySpecialAction(): String
-    protected abstract fun performSpecialAction(): Attack
+    protected abstract fun performSpecialAction(): Attack?
     protected abstract fun isWeaponValid(w: Weapon): Boolean
     protected abstract fun isArmorValid(a: Armor): Boolean
 }
