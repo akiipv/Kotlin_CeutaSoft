@@ -35,11 +35,10 @@ class Hunter(
         other.isDefending,
         other.isCPU,
         other.weapon,
-        other.armor,
-        other.heirlooms,
+        HashMap(other.armor),
+        ArrayList(other.heirlooms),
         other.pet.name,
         other.pet.race,
-        other.pet
     )
 
     override fun attack(): Attack {
@@ -130,4 +129,3 @@ class Hunter(
 
         fun getClassName1(): String = "Pet"
     }
-}

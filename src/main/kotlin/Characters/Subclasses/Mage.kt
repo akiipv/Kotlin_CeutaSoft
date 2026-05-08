@@ -27,8 +27,8 @@ class Mage(
         other.isDefending,
         other.isCPU,
         other.weapon,
-        other.armor,
-        other.heirlooms
+        HashMap(other.armor),
+        ArrayList(other.heirlooms)
     )
 
     fun getClassName(): String = "Mage"

@@ -21,8 +21,8 @@ class GameLogger {
                         i++
                     }
                 }
+                return CharacterFactory.createfromDataArray(data)
             }
-            return TODO()
         }
     }
 }

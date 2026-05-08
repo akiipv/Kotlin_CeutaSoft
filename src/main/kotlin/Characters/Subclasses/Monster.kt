@@ -6,6 +6,8 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import java.util.ArrayList
+import java.util.HashMap
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -29,8 +31,8 @@ class Monster(
         other.isDefending,
         other.isCPU,
         other.weapon,
-        other.armor,
-        other.heirlooms
+        HashMap(other.armor),
+        ArrayList(other.heirlooms)
     )
 
     override fun attack(): Attack {

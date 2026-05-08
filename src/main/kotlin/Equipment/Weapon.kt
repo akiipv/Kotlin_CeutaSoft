@@ -25,15 +25,7 @@ class Weapon(
         set(value) {
             require(
                 value.lowercase() in setOf(
-                    "sword",
-                    "mace",
-                    "axe",
-                    "scepter",
-                    "dagger",
-                    "greatsword",
-                    "hammer",
-                    "bow",
-                    "staff"
+                    "sword", "mace", "axe", "scepter", "dagger", "greatsword", "hammer", "bow", "staff"
                 )
             ) { "Weapon type not admited." }
             field = value

@@ -29,8 +29,8 @@ abstract class Faithful(
         other.isDefending,
         other.isCPU,
         other.weapon,
-        other.armor,
-        other.heirlooms
+        HashMap(other.armor),
+        ArrayList(other.heirlooms)
     )
 
     override fun displaySpecialAction(): String = "2. Pray for a miracle."
