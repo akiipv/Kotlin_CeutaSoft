@@ -31,7 +31,7 @@ class Mage(
         ArrayList(other.heirlooms)
     )
 
-    fun getClassName(): String = "Mage"
+    override fun getClassName(): String = "Mage"
 
     private fun castSpell(spell: String): Attack = when (spell) {
         "1" -> {

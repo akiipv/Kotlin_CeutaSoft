@@ -46,7 +46,7 @@ class Hunter(
         return Attack(super.attack().dmgValue + pet.attack().dmgValue, "PHY")
     }
 
-    fun getClassName(): String = "Hunter"
+    override fun getClassName(): String = "Hunter"
 
     override fun equipHeirloom(heirloom: Heirloom): Boolean = if (super.equipHeirloom(heirloom))
         true
@@ -60,6 +60,7 @@ class Hunter(
         if (r.nextInt(0, 100) >= 15) stats.spd += 2
         if (r.nextInt(0, 100) >= 60) stats.res += 1
     }
+
     override fun initializeStats(): Stats = Stats(100, 10, 10, 12, 10)
     override fun displaySpecialAction(): String = "2. Cheer on your pet."
 
@@ -94,38 +95,38 @@ class Hunter(
         override fun isArmorValid(a: Armor): Boolean = false
 
         fun updateStats(): Stats = when (race.lowercase()) {
-                "canid" -> {
-                    var hunterStats = this@Hunter.stats
-                    Stats(
-                        (hunterStats.hp * 0.2).roundToInt(),
-                        (hunterStats.atk * 0.2).roundToInt(),
-                        (hunterStats.arm * 0.2).roundToInt(),
-                        (hunterStats.spd * 0.2).roundToInt(),
-                        (hunterStats.res * 0.2).roundToInt()
-                    )
-                }
-                "feline" -> {
-                    var hunterStats = this@Hunter.stats
-                    Stats(
-                        (hunterStats.hp * 0.15).roundToInt(),
-                        (hunterStats.atk * 0.3).roundToInt(),
-                        (hunterStats.arm * 0.15).roundToInt(),
-                        (hunterStats.spd * 0.3).roundToInt(),
-                        (hunterStats.res * 0.15).roundToInt()
-                    )
-                }
-                "raptor" -> {
-                    var hunterStats = this@Hunter.stats
-                    Stats(
-                        (hunterStats.hp * 0.05).roundToInt(),
-                        (hunterStats.atk * 0.15).roundToInt(),
-                        (hunterStats.arm * 0.05).roundToInt(),
-                        (hunterStats.spd * 0.35).roundToInt(),
-                        (hunterStats.res * 0.25).roundToInt()
-                    )
-                } else -> throw IllegalArgumentException("The animal companion species must be either Canid, Feline or Raptor.")
+            "canid" -> {
+                var hunterStats = this@Hunter.stats
+                Stats(
+                    (hunterStats.hp * 0.2).roundToInt(),
+                    (hunterStats.atk * 0.2).roundToInt(),
+                    (hunterStats.arm * 0.2).roundToInt(),
+                    (hunterStats.spd * 0.2).roundToInt(),
+                    (hunterStats.res * 0.2).roundToInt()
+                )
             }
+            "feline" -> {
+                var hunterStats = this@Hunter.stats
+                Stats(
+                    (hunterStats.hp * 0.15).roundToInt(),
+                    (hunterStats.atk * 0.3).roundToInt(),
+                    (hunterStats.arm * 0.15).roundToInt(),
+                    (hunterStats.spd * 0.3).roundToInt(),
+                    (hunterStats.res * 0.15).roundToInt()
+                )
+            }
+            "raptor" -> {
+                var hunterStats = this@Hunter.stats
+                Stats(
+                    (hunterStats.hp * 0.05).roundToInt(),
+                    (hunterStats.atk * 0.15).roundToInt(),
+                    (hunterStats.arm * 0.05).roundToInt(),
+                    (hunterStats.spd * 0.35).roundToInt(),
+                    (hunterStats.res * 0.25).roundToInt()
+                )
+            }
+            else -> throw IllegalArgumentException("The animal companion species must be either Canid, Feline or Raptor.")
         }
-
-        fun getClassName1(): String = "Pet"
+        override fun getClassName(): String = "Pet"
     }
+}

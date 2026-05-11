@@ -41,7 +41,7 @@ class Monster(
     }
 
     override fun takeTurn(): Attack = attack()
-    fun getClassName(): String = "Monster"
+    override fun getClassName(): String = "Monster"
 
     override fun onLevelUp() {
         val r = Random

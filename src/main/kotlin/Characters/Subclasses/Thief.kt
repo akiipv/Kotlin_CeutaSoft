@@ -35,7 +35,7 @@ class Thief(
         ArrayList(other.heirlooms)
     )
 
-    fun getClassName(): String = "Thief"
+    override fun getClassName(): String = "Thief"
 
     override fun onLevelUp() {
         val r = Random

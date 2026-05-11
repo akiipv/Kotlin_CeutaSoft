@@ -65,7 +65,7 @@ class Warrior(
         }
     }
 
-    fun getClassName(): String = "Warrior"
+    override fun getClassName(): String = "Warrior"
 
     fun equipExtraWeapon(w: Weapon): Boolean = if (weapon?.hands != 1 || !isWeaponValid(w))
         false

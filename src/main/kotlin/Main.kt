@@ -6,4 +6,5 @@ import org.example.Characters.Stats
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
     val hola: Stats = Stats()
+    println(hola)
 }

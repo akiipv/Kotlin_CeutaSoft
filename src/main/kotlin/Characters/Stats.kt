@@ -36,4 +36,11 @@ data class Stats(
         "fth" -> fth
         else -> 0
     }
+
+    override fun toString(): String = "Stats﹕" +
+                "\n\t·Health﹕ ${this.hp}" +
+                "\n\t·Attack﹕ ${this.atk}" +
+                "\n\t·Defense﹕ ${this.arm}" +
+                "\n\t·Speed﹕ ${this.spd}" +
+                "\n\t·Resistance﹕ ${this.res}"
 }

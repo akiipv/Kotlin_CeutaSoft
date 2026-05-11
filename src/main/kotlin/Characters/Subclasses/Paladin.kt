@@ -33,7 +33,7 @@ class Paladin(
         ArrayList(other.heirlooms)
     )
 
-    fun getClassName(): String = "Paladin"
+    override fun getClassName(): String = "Paladin"
 
     override fun onLevelUp() {
         val r = Random

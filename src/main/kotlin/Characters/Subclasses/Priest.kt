@@ -33,7 +33,7 @@ class Priest(
         ArrayList(other.heirlooms)
     )
 
-    fun getClassName(): String = "Priest"
+    override fun getClassName(): String = "Priest"
 
     override fun onLevelUp() {
         val r = Random
