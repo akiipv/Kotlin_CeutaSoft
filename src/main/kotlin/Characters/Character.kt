@@ -1,7 +1,10 @@
 package org.example.Characters
 
 import org.example.Combat.Attack
-import org.example.Equipment.*
+import org.example.Equipment.Armor
+import org.example.Equipment.Heirloom
+import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import org.example.GameDataManagement.GameLogger
 import java.io.File
 import java.util.*
@@ -17,6 +20,7 @@ abstract class Character(
     var armor: HashMap<String, Armor> = HashMap(),
     var heirlooms: ArrayList<Heirloom> = ArrayList()
 ) : Comparable<Character> {
+
     constructor(other: Character) : this(
         other.name,
         other.race,
@@ -28,6 +32,8 @@ abstract class Character(
         other.armor,
         other.heirlooms
     )
+
+    constructor(characterSheet: File) : this(GameLogger.readCharacter(characterSheet))
 
     var name: String = name
         set(value) {
@@ -49,31 +55,33 @@ abstract class Character(
 
     var stats: Stats = stats
         set(value) {
-            field = stats.copy()
+            field = value.copy()
         }
 
-    fun isDead(): Boolean = stats.hp < 0
+    fun isDead(): Boolean = stats.hp <= 0
 
     fun levelUp() {
         lvl++
-        //onLevelUp()
+        onLevelUp()
     }
 
-    open fun attack(): Attack = Attack(calculateTotalStat("ATK"), "PHY")
+    open fun attack(): Attack {
+        CombatLogManager.out("\n$name attacks!")
+        return Attack(calculateTotalStat("ATK"), "PHY")
+    }
 
     open fun defend(attack: Attack) {
         var totalDmg: Int = 0
         when (attack.dmgType) {
             "PHY" -> totalDmg = attack.dmgValue - calculateTotalStat("ARM")
-            "MAG" -> totalDmg = attack.dmgValue + calculateTotalStat("RES")
+            "MAG" -> totalDmg = attack.dmgValue - calculateTotalStat("RES")
             "STA" -> {}
             else -> throw IllegalArgumentException("Damage type must be PHY for physical, MAG for magical or STA for status changes.")
         }
 
-        if (totalDmg <= 0 && !attack.dmgType.equals("STA"))
-        // CombatLogManager. todo -> fokin vida
+        if (totalDmg <= 0 && !attack.dmgType.equals("STA")) CombatLogManager.out("\tIt doesn't even make a dent.")
         else if (!attack.dmgType.equals("STA")) {
-            // CombatLogManager
+            CombatLogManager.out("\t$name receives $totalDmg points of damage.")
             stats.receiveDmg(totalDmg)
         }
     }
@@ -81,20 +89,20 @@ abstract class Character(
     open fun takeTurn(): Attack {
         var attack: Attack
         if (!isCPU) {
-            val scan: Scanner = Scanner(System.`in`)
             if (isDefending) {
                 isDefending = false
-                // CombatLog
+                CombatLogManager.out("\n$name drops their guard and gets ready.")
                 stats.dropGuard()
             }
-            println("\n\t1. Attack.")
+            println("\n$name, what would you like to do? ੭")
+            println("\t1. Attack.")
             println("\t" + displaySpecialAction())
             println("\t3. Defend.")
             println("\t4. Pass turn.")
-            print("What would you like to do? ")
-            when (scan.nextLine()) {
+            print("⟢ ")
+            when (readLine()?.trim()) {
                 "1" -> attack = attack()
-                "2" -> attack = performSpecialAction()!!
+                "2" -> attack = performSpecialAction()?: Attack(0, "STA")
                 "3" -> {
                     if (isDefending) {
                         isDefending = true
@@ -110,11 +118,9 @@ abstract class Character(
                 else -> throw RuntimeException("Input a valid move")
             }
             return attack
-        }
-        else return Attack()
+        } else return attack()
     }
 
-    // todo -> Gamelogger
     fun compareToCharacterSheet(characterSheet: File) {
         var c: Character
         require(characterSheet.isFile && characterSheet.canRead()) { "Error. You must procure a valid character sheet." }
@@ -122,13 +128,17 @@ abstract class Character(
         if (c != this && c.name == this.name) {
             println("Character doesn't match with the character sheet provided. Updating character")
             updateCharacter(c)
-        }
+        } else println("This character doesn't need updating.")
+    }
+
+    fun updateOnCombatWin(combatLog: File) {
+        if (GameLogger.readCombatWin(this, combatLog)) levelUp()
     }
 
     fun equipWeapon(weapon: Weapon): Boolean {
         if (this.weapon != null) return false
         if (!isWeaponValid(weapon)) return false
-        this.weapon = Weapon()
+        this.weapon = weapon
         return true
     }
 
@@ -140,7 +150,7 @@ abstract class Character(
     }
 
     open fun equipHeirloom(heirloom: Heirloom): Boolean {
-        //if (!validateHeirlooms(heirloom)) return false
+        if (!validateHeirlooms(heirloom)) return false
         heirlooms.add(heirloom)
         return true
     }
@@ -162,15 +172,16 @@ abstract class Character(
             "\n\t·Name﹕ $name" +
             "\n\t·Race﹕ $race" +
             "\n\t·Level﹕ $lvl" +
-            "\n\t·Stats﹕ $stats" +
-            "\n\t·Type﹕ ${isCPUString()}"
+            "\n\t$stats" +
+            printStatsIfValid() +
+            "\n\t·Type﹕ ${isCPUString()}\n"
 
     fun equals(other: Character): Boolean = (
             this.name == other.name &&
-            this.race == other.race &&
-            this.lvl == other.lvl &&
-            this.stats.equals(stats) &&
-            this.isCPU == other.isCPU
+                    this.race == other.race &&
+                    this.lvl == other.lvl &&
+                    this.stats.equals(stats) &&
+                    this.isCPU == other.isCPU
             )
 
     override fun compareTo(other: Character): Int {
@@ -190,10 +201,11 @@ abstract class Character(
 
     private fun printStatsIfValid(): String {
         var extraStats = ""
-        if(stats.mag != 0) extraStats += "Mag: ${stats.mag}\n"
-        if(stats.fth != 0) extraStats += "Fe: ${stats.fth}\n"
+        if (stats.mag != 0) extraStats += "\n\t\t·Magic﹕ ${stats.mag}"
+        if (stats.fth != 0) extraStats += "\n\t\t·Faith﹕ ${stats.fth}"
         return extraStats
     }
+
     private fun updateCharacter(update: Character) {
         this.race = update.race
         this.lvl = update.lvl
@@ -201,15 +213,15 @@ abstract class Character(
         this.isCPU = update.isCPU
     }
 
-    fun validateHeirloom(heirloom: Heirloom): Boolean {
+    fun validateHeirlooms(heirloom: Heirloom): Boolean {
         var ringCount = 0
         var amuletFound = false
         heirlooms.forEach {
             if (it.type == "Ring") ringCount++
             if (it.type == "Amulet") amuletFound = true
         }
-        if (heirloom.type == "Ring") return false
-        if (heirloom.type == "Amulet") return false
+        if (heirloom.type == "Ring" && ringCount > 2) return false
+        if (heirloom.type == "Amulet" && amuletFound) return false
         return true
     }
 }

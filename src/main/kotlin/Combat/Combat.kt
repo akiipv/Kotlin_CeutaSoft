@@ -2,7 +2,9 @@ package org.example.Combat
 
 import org.example.Characters.*
 import org.example.Characters.Subclasses.*
+import org.example.Deco.CombatUI
 import org.example.Equipment.*
+import org.example.GameDataManagement.CombatLogManager
 import java.io.*
 
 class Combat() {
@@ -10,9 +12,9 @@ class Combat() {
         val treasures: ArrayList<Equipment> = loadTreasures()
 
         fun combat(player: Character, CPU: Character): Equipment {
-            //if (!CombatLogManager.hasLogStarted())
-                //
-            //
+            println("₊˚ ‿︵‿︵‿︵୨୧ · · ♡ · · ୨୧‿︵‿︵‿︵ ˚₊")
+            if (!CombatLogManager.hasLogStarted()) CombatLogManager.startLog("${player.name} vs ${CPU.name}")
+            CombatLogManager.out("The showdown between ${player.name} and ${CPU.name}... BEGINS .ᐟ.ᐟ")
             var c1: Character
             var c2: Character
 
@@ -39,15 +41,17 @@ class Combat() {
                 }
             }
             announceWinner(c1, c2)
-            //
+            CombatLogManager.closeLog()
             return treasures.random()
         }
 
         fun groupCombat(players: ArrayList<Character>, CPU: ArrayList<Monster>): ArrayList<Equipment> {
             players.sortByDescending { it.lvl }
             CPU.sortByDescending { it.lvl }
+            var playerLeader = players.first()
+            var CPULeader = CPU.first()
             var prize = ArrayList<Equipment>()
-            //
+            CombatLogManager.out("${playerLeader.name}'s party vs ${CPULeader.name}'s group.")
             while (players.isNotEmpty() && CPU.isNotEmpty()){
                 var combatPrize: Equipment = combat(players.first(), CPU.first())
                 if (CPU.first().isDead()) {
@@ -55,18 +59,13 @@ class Combat() {
                     CPU.removeFirst()
                 } else players.removeFirst()
             }
-            if (players.isEmpty()) TODO()
-            else TODO()
+            if (players.isEmpty()) CombatLogManager.out("\n\t${playerLeader.getClassName()}'s party was wiped out from existence.")
+            else CombatLogManager.out("\n\t${playerLeader.getClassName()}'s party was victorious!")
             return prize
         }
 
         fun visualizeHP(c1: Character, c2: Character) {
-            if (c1.stats.hp > 0)
-                println("\n·${c1.name}: ${c1.stats.hp}")
-            else println("\n·${c1.name}: DEAD")
-            if (c2.stats.hp > 0)
-                println("\n·${c2.name}: ${c2.stats.hp}")
-            else println("\n·${c2.name}: DEAD")
+            println("\n" + CombatUI.hpDisplay(c1, c2))
         }
 
         private fun checkFasterCharacter(c1: Character, c2: Character): Boolean = c1.calculateTotalStat("SPD") >= c2.calculateTotalStat("SPD")
@@ -74,8 +73,9 @@ class Combat() {
         private fun anybodyDead(c1: Character, c2: Character): Boolean = c1.isDead() || c2.isDead()
 
         private fun announceWinner(c1: Character, c2: Character) {
-            val winner = if (c1.isDead()) c2 else c1
-            TODO()
+            val winner = if (c1.isDead() && !c2.isDead()) c2 else c1
+            val loser = if (c2.isDead() && !c1.isDead()) c2 else c1
+            CombatLogManager.out("\n\t${winner.name} towers over ${loser.name} corpse.")
         }
 
         private fun loadTreasures(): ArrayList<Equipment> =
@@ -133,7 +133,7 @@ class Combat() {
                         val split = line.split(",")
                         var nombre = split[0]
                         if (nombre.length > 20) nombre = nombre.take(20)
-                        val h = Heirloom(nombre, generateStatsFromString(split[4], 3), split[3], split[4].toInt(), split[2])
+                        val h = Heirloom(nombre, generateStatsFromString(split[3], 3), split[1], split[4].toInt(), split[2])
                         result.add(h)
                     }
                 }

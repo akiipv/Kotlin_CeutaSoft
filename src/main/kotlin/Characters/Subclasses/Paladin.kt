@@ -5,6 +5,7 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -50,22 +51,22 @@ class Paladin(
     override fun isArmorValid(a: Armor): Boolean = a.type == "Metal"
 
     override fun castMiracle(): Attack {
-        val scan = Scanner(System.`in`)
-        println("\n\t1. Imbue weapon - Coat your weapon with the holiness of your faith.")
+        println("\nWhat do you want to cast?")
+        println("\t1. Imbue weapon - Coat your weapon with the holiness of your faith.")
         println("\t2. Bastion of faith - Protect yourself, faithfully.")
         println("\t3. Sacred blast - Blind your opponent with your god's splendor.")
-        println("What do you want to cast?")
-        return when (scan.nextLine()) {
+        print("⟢ ")
+        return when (readLine()?.trim()) {
             "1" -> {
-                //
+                CombatLogManager.out("\n$name prays: Imbue weapon!")
                 Attack(0, "STA")
             }
             "2" -> {
-                //
+                CombatLogManager.out("\n$name prays: Bastion of faith!")
                 Attack(0, "STA")
             }
             "3" -> {
-                //
+                CombatLogManager.out("\n$name prays: Sacred blast!")
                 Attack(0, "STA")
             } else -> throw IllegalArgumentException("Choose a valid miracle.")
         }

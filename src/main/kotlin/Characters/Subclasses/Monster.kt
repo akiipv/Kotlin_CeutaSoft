@@ -6,6 +6,7 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import java.util.ArrayList
 import java.util.HashMap
 import kotlin.math.roundToInt
@@ -36,7 +37,7 @@ class Monster(
     )
 
     override fun attack(): Attack {
-        //
+        CombatLogManager.out("\nThe $race $name attacks!")
         return super.attack()
     }
 

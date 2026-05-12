@@ -20,6 +20,10 @@ class CombatLogManager {
             writer?.flush()
         }
 
+        fun closeLog() {
+            writer?.close()
+        }
+
         fun hasLogStarted(): Boolean = writer != null
     }
 }

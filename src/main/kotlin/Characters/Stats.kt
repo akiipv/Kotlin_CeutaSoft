@@ -14,6 +14,7 @@ data class Stats(
 
     fun receiveDmg(dmg: Int) {
         this.hp -= dmg
+        if (hp < 0) hp = 0
     }
 
     fun raiseGuard() {
@@ -37,10 +38,10 @@ data class Stats(
         else -> 0
     }
 
-    override fun toString(): String = "Stats﹕" +
-                "\n\t·Health﹕ ${this.hp}" +
-                "\n\t·Attack﹕ ${this.atk}" +
-                "\n\t·Defense﹕ ${this.arm}" +
-                "\n\t·Speed﹕ ${this.spd}" +
-                "\n\t·Resistance﹕ ${this.res}"
+    override fun toString(): String = "·Stats﹕" +
+                "\n\t\t·Health﹕ ${this.hp}" +
+                "\n\t\t·Attack﹕ ${this.atk}" +
+                "\n\t\t·Defense﹕ ${this.arm}" +
+                "\n\t\t·Speed﹕ ${this.spd}" +
+                "\n\t\t·Resistance﹕ ${this.res}"
 }

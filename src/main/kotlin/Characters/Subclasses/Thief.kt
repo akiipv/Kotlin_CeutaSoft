@@ -6,6 +6,7 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import java.util.ArrayList
 import java.util.HashMap
 import kotlin.math.roundToInt
@@ -50,7 +51,7 @@ class Thief(
     override fun displaySpecialAction(): String = "2. Steal."
 
     override fun performSpecialAction(): Attack {
-        //
+        CombatLogManager.out("\n$name violently mugs their opponent!")
         return Attack(stats.spd, "MAG")
     }
 

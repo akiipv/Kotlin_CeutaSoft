@@ -38,5 +38,6 @@ abstract class Faithful(
         //
         return castMiracle()
     }
+
     protected abstract fun castMiracle(): Attack
 }

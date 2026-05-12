@@ -2,7 +2,9 @@ package org.example.Characters.Subclasses
 
 import org.example.Characters.*
 import org.example.Combat.Attack
+import org.example.Combat.Combat
 import org.example.Equipment.*
+import org.example.GameDataManagement.CombatLogManager
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -42,7 +44,7 @@ class Hunter(
     )
 
     override fun attack(): Attack {
-        //
+        CombatLogManager.out("\n$name and ${pet.name} attacks in perfect sync!")
         return Attack(super.attack().dmgValue + pet.attack().dmgValue, "PHY")
     }
 
@@ -65,7 +67,7 @@ class Hunter(
     override fun displaySpecialAction(): String = "2. Cheer on your pet."
 
     override fun performSpecialAction(): Attack {
-        //
+        CombatLogManager.out("\n\tC'mon, ${pet.name} go get'em!")
         return Attack(0, "STA")
     }
 
@@ -80,8 +82,7 @@ class Hunter(
         isCPU: Boolean = false
     ) : Character(name, race, lvl, stats, false, isCPU) {
 
-        override fun equipHeirloom(heirloom: Heirloom): Boolean = if (heirloom.type != "Amulet")
-            false
+        override fun equipHeirloom(heirloom: Heirloom): Boolean = if (heirloom.type != "Amulet") false
         else super.equipHeirloom(heirloom)
 
         override fun onLevelUp() {
@@ -127,6 +128,7 @@ class Hunter(
             }
             else -> throw IllegalArgumentException("The animal companion species must be either Canid, Feline or Raptor.")
         }
+
         override fun getClassName(): String = "Pet"
     }
 }

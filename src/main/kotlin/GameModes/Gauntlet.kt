@@ -3,16 +3,10 @@ package org.example.GameModes
 import org.example.Characters.Character
 import org.example.Characters.Subclasses.Monster
 import org.example.Combat.Combat
-import org.example.Equipment.Armor
-import org.example.Equipment.Equipment
-import org.example.Equipment.Heirloom
-import org.example.Equipment.Weapon
+import org.example.Equipment.*
 import org.example.GameDataManagement.CombatLogManager
 import org.example.GameMap.Dungeon
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.IOException
+import java.io.*
 
 class Gauntlet {
     var dungeon = Dungeon()

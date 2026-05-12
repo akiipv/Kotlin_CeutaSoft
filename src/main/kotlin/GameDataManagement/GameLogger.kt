@@ -5,7 +5,7 @@ import java.io.*
 
 class GameLogger {
     companion object {
-        val defaultDirectory: File = File("./OutputFiles/")
+        val defaultDirectory: File = File("./src/main/OutputFiles")
 
         fun readCharacter(characterSheet: File): Character {
             var data = MutableList(11) { " " }

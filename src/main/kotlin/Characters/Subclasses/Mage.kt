@@ -3,6 +3,7 @@ package org.example.Characters.Subclasses
 import org.example.Characters.*
 import org.example.Combat.Attack
 import org.example.Equipment.*
+import org.example.GameDataManagement.CombatLogManager
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -33,23 +34,24 @@ class Mage(
 
     override fun getClassName(): String = "Mage"
 
-    private fun castSpell(spell: String): Attack = when (spell) {
+    private fun castSpell(spell: String?): Attack = when (spell) {
         "1" -> {
-            //
+            CombatLogManager.out("\n$name incantates: Fireball!")
             Attack((stats.mag * 0.7).roundToInt(), "STA")
         }
         "2" -> {
-            //
+            CombatLogManager.out("\n$name incantates: Arcane shield!")
             Attack(0, "STA")
         }
         "3" -> {
-            //
+            CombatLogManager.out("\n$name incantates: Zephyr!")
             Attack((stats.mag * 0.3).roundToInt(), "STA")
         }
         "4" -> {
-            //
+            CombatLogManager.out("\n$name incantates: Mind surge!")
             Attack(0, "STA")
-        } else -> throw IllegalArgumentException("Choose a valid spell.")
+        }
+        else -> performSpecialAction()
     }
 
 
@@ -68,13 +70,13 @@ class Mage(
     override fun displaySpecialAction(): String = "2. Cast a spell"
 
     override fun performSpecialAction(): Attack {
-        val scan = Scanner(System.`in`)
-        println("\n\t1. Fireball - Blast your opponent with a fiery incandescent orb.")
+        println("\nWhat do you want to cast?")
+        println("\t1. Fireball - Blast your opponent with a fiery incandescent orb.")
         println("\t2. Arcane shield - Protect yourself, magely.")
         println("\t3. Zephyr - Strong wind blasts your opponent away.")
         println("\t4. Mind surge - Your magic improves your reaction speed.")
-        println("What do you want to cast?")
-        return castSpell(scan.nextLine())
+        print("⟢ ")
+        return castSpell(readLine()?.trim())
     }
 
     override fun isWeaponValid(w: Weapon): Boolean = w.type in setOf("Staff", "Scepter")

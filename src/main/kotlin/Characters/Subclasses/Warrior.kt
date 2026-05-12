@@ -6,6 +6,7 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import java.util.ArrayList
 import java.util.HashMap
 import kotlin.math.roundToInt
@@ -42,12 +43,12 @@ class Warrior(
     fun toggleFury() {
         if (fury)
             println("\n\t $name calms down and face their enemy.")
-        else println("\n\t $name feels the RAGE!")
+        else println("\n\t $name feels the RAGE .ᐟ.ᐟ")
         fury = !fury
     }
 
     override fun attack(): Attack = if (fury) {
-        //
+        CombatLogManager.out("\n$name is furious and attacks recklessly")
         Attack((stats.atk * 2), "PHY")
     } else super.attack()
 
@@ -58,9 +59,9 @@ class Warrior(
             "MAG" -> totalDmg = attack.dmgValue - (stats.res / 2)
             else -> throw IllegalArgumentException("Damage type must be PHY for physical or MAG for magical.")
         }
-        if (totalDmg <= 0 && attack.dmgType != "STA") TODO() // CombatLogManager.out("\nIt doesn't even make a dent.")
+        if (totalDmg <= 0 && attack.dmgType != "STA") CombatLogManager.out("\nIt doesn't even make a dent.")
         else if (attack.dmgType != "STA") {
-            // CombatLogManager.out("\t $name receives " + totalDmg + " points of damage.")
+            CombatLogManager.out("\t$name receives $totalDmg points of damage.")
             stats.receiveDmg(totalDmg)
         }
     }

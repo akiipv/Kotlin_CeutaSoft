@@ -2,7 +2,7 @@ package org.example.Combat
 
 class Attack(
     var dmgValue: Int = 0,
-    dmgType: String = ""
+    dmgType: String = "STA"
 ) {
     var dmgType: String = dmgType
         set(value) {

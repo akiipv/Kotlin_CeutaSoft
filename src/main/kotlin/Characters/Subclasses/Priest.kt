@@ -5,6 +5,7 @@ import org.example.Combat.Attack
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
+import org.example.GameDataManagement.CombatLogManager
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -50,22 +51,22 @@ class Priest(
     override fun isArmorValid(a: Armor): Boolean = a.type == "Cloth"
 
     override fun castMiracle(): Attack {
-        val scan = Scanner(System.`in`)
-        println("\n\t1. Heal - Cure some of your target's wounds.")
+        println("\nWhat do you want to cast?")
+        println("\t1. Heal - Cure some of your target's wounds.")
         println("\t2. Holy prayer - Partially restores all of your party members.")
         println("\t3. Divine punishment - Ask your god to smite your enemies in a blast of light.")
-        println("What do you want to cast?")
-        return when (scan.nextLine()) {
+        print("⟢ ")
+        return when (readLine()?.trim()) {
             "1" -> {
-                //
+                CombatLogManager.out("\n$name prays: Heal!")
                 Attack(0, "STA")
             }
             "2" -> {
-                //
+                CombatLogManager.out("\n$name prays: Holy prayer!")
                 Attack(0, "STA")
             }
             "3" -> {
-                //
+                CombatLogManager.out("\n$name prays: Divine punishment!")
                 Attack((stats.fth * 0.55).roundToInt(), "STA")
             } else -> throw IllegalArgumentException("Choose a valid miracle.")
         }

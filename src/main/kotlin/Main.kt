@@ -1,10 +1,64 @@
 package org.example
 
+import org.example.Characters.Character
 import org.example.Characters.Stats
+import org.example.Characters.Subclasses.Hunter
+import org.example.Characters.Subclasses.Mage
+import org.example.Characters.Subclasses.Monster
+import org.example.Characters.Subclasses.Priest
+import org.example.Combat.Combat
+import org.example.Deco.CombatUI
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val hola: Stats = Stats()
-    println(hola)
+
+    val mage = Mage(
+        name = "Aldric",
+        race = "Human",
+        lvl = 5,
+        stats = Stats(
+            hp = 100,
+            atk = 10,
+            arm = 5,
+            spd = 12,
+            res = 15,
+            mag = 30
+        ),
+        isCPU = false
+    )
+
+    val priest = Priest(
+        name = "Lucius",
+        race = "Elf",
+        lvl = 4,
+        stats = Stats(
+            hp = 110,
+            atk = 6,
+            arm = 8,
+            spd = 10,
+            res = 20,
+            fth = 25
+        ),
+        isCPU = true
+    )
+
+    val hunter = Hunter(
+        name = "Ragnar",
+        race = "Nord",
+        lvl = 6,
+        stats = Stats(
+            hp = 100,
+            atk = 15,
+            arm = 10,
+            spd = 14,
+            res = 8
+        ),
+        isCPU = true,
+        petName = "Fenrir",
+        petRace = "Canid"
+    )
+
+    Combat.combat(
+        Mage(mage),
+        Hunter(hunter)
+    )
 }
