@@ -27,7 +27,7 @@ abstract class Character(
         other.race,
         other.lvl,
         other.stats.copy(),
-        other.isDefending,
+        false,
         other.isCPU,
         other.weapon,
         other.armor,
@@ -109,7 +109,7 @@ abstract class Character(
                         isDefending = true
                         stats.raiseGuard()
                     }
-                    println("$name raises its guard.\n")
+                    println("\n$name raises its guard.")
                     attack = Attack(0, "STA")
                 }
                 "4" -> {

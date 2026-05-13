@@ -27,7 +27,7 @@ class Mage(
         other.race,
         other.lvl,
         other.stats.copy(),
-        other.isDefending,
+        false,
         other.isCPU,
         other.weapon,
         HashMap(other.armor),
