@@ -1,6 +1,7 @@
 package org.example
 
 import org.example.Characters.Character
+import org.example.Database.*
 import org.example.Characters.Stats
 import org.example.Characters.Subclasses.*
 import org.example.Combat.Combat
@@ -55,12 +56,13 @@ fun main() {
         petRace = "Canid"
     )
 
-    print(CombatUI.cursiveText("hola"))
+    Database.connect()
+    CharacterDB.addCharacter(hunter)
 
-    var list = arrayListOf<Character>(hunter, priest, mage)
+    /*var list = arrayListOf<Character>(hunter, priest, mage)
 
     var prueba: Gauntlet = Gauntlet()
     prueba.initGauntlet(File("./DataFiles/Dungeons/burningHells.csv"), list)
-    prueba.playGauntlet()
+    prueba.playGauntlet()*/
 
 }
