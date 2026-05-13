@@ -2,12 +2,11 @@ package org.example
 
 import org.example.Characters.Character
 import org.example.Characters.Stats
-import org.example.Characters.Subclasses.Hunter
-import org.example.Characters.Subclasses.Mage
-import org.example.Characters.Subclasses.Monster
-import org.example.Characters.Subclasses.Priest
+import org.example.Characters.Subclasses.*
 import org.example.Combat.Combat
 import org.example.Deco.CombatUI
+import org.example.GameModes.Gauntlet
+import java.io.File
 
 fun main() {
 
@@ -40,7 +39,6 @@ fun main() {
         ),
         isCPU = true
     )
-
     val hunter = Hunter(
         name = "Ragnar",
         race = "Nord",
@@ -57,8 +55,12 @@ fun main() {
         petRace = "Canid"
     )
 
-    Combat.combat(
-        Mage(mage),
-        Hunter(hunter)
-    )
+    print(CombatUI.cursiveText("hola"))
+
+    var list = arrayListOf<Character>(hunter, priest, mage)
+
+    var prueba: Gauntlet = Gauntlet()
+    prueba.initGauntlet(File("./DataFiles/Dungeons/burningHells.csv"), list)
+    prueba.playGauntlet()
+
 }

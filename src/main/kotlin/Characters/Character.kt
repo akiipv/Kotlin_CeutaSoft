@@ -1,6 +1,7 @@
 package org.example.Characters
 
 import org.example.Combat.Attack
+import org.example.Deco.CombatUI
 import org.example.Equipment.Armor
 import org.example.Equipment.Heirloom
 import org.example.Equipment.Weapon
@@ -79,9 +80,9 @@ abstract class Character(
             else -> throw IllegalArgumentException("Damage type must be PHY for physical, MAG for magical or STA for status changes.")
         }
 
-        if (totalDmg <= 0 && !attack.dmgType.equals("STA")) CombatLogManager.out("\tIt doesn't even make a dent.")
+        if (totalDmg <= 0 && !attack.dmgType.equals("STA")) CombatLogManager.out(CombatUI.cursiveText("\tIt doesn't even make a dent."))
         else if (!attack.dmgType.equals("STA")) {
-            CombatLogManager.out("\t$name receives $totalDmg points of damage.")
+            CombatLogManager.out(CombatUI.cursiveText("\t$name receives $totalDmg points of damage."))
             stats.receiveDmg(totalDmg)
         }
     }
@@ -104,7 +105,7 @@ abstract class Character(
                 "1" -> attack = attack()
                 "2" -> attack = performSpecialAction()?: Attack(0, "STA")
                 "3" -> {
-                    if (isDefending) {
+                    if (!isDefending) {
                         isDefending = true
                         stats.raiseGuard()
                     }
@@ -193,7 +194,6 @@ abstract class Character(
     private fun isCPUString(): String = if (isCPU) "CPU" else "Player"
 
     protected abstract fun onLevelUp()
-    protected abstract fun initializeStats(): Stats
     protected abstract fun displaySpecialAction(): String
     protected abstract fun performSpecialAction(): Attack?
     protected abstract fun isWeaponValid(w: Weapon): Boolean
@@ -209,7 +209,7 @@ abstract class Character(
     private fun updateCharacter(update: Character) {
         this.race = update.race
         this.lvl = update.lvl
-        this.stats = stats.copy()
+        this.stats = update.stats.copy()
         this.isCPU = update.isCPU
     }
 

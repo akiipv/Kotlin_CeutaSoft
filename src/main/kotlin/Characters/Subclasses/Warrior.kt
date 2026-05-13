@@ -16,7 +16,7 @@ class Warrior(
     name: String = "",
     race: String = "",
     lvl: Int = 0,
-    stats: Stats = Stats(),
+    stats: Stats = initializeStats(),
     isDefending: Boolean = false,
     isCPU: Boolean = false,
     weapon: Weapon? = null,
@@ -25,6 +25,8 @@ class Warrior(
     armor: HashMap<String, Armor> = HashMap(),
     heirlooms: ArrayList<Heirloom> = ArrayList()
 ) : Character(name, race, lvl, stats, isDefending, isCPU, weapon, armor, heirlooms) {
+
+    companion object { fun initializeStats(): Stats = Stats(120, 15, 10, 10, 5) }
 
     constructor(other: Warrior) : this(
         other.name,
@@ -84,7 +86,6 @@ class Warrior(
         if (r.nextInt(0, 100) >= 80) stats.res += 1
     }
 
-    override fun initializeStats(): Stats = Stats(120, 15, 10, 10, 5)
     override fun displaySpecialAction(): String = "2. Toggle fury."
 
     override fun performSpecialAction(): Attack {

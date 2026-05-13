@@ -60,4 +60,6 @@ object CombatUI {
             "7" -> TODO()
         else -> throw IllegalArgumentException("Tf is ts")
     }
+
+    fun cursiveText(text: String): String = "\u001B[3m$text\u001B[0m"
 }

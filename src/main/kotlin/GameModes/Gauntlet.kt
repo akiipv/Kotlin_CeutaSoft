@@ -36,7 +36,7 @@ class Gauntlet {
     private fun loadDungeon(dungeonFile: File) {
         var dungeonName: String
         var dungeonLevel: Int
-        require(dungeonFile.exists() && dungeonFile.canRead()) { throw IOException("Can't read dungeon file.") }
+        require(dungeonFile.exists() && dungeonFile.canRead()) { "Can't read dungeon file." }
         BufferedReader(FileReader(dungeonFile)).use { br ->
             var monsterList = HashSet<Monster>()
             var split = br.readLine().split(",")

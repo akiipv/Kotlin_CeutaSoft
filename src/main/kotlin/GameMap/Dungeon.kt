@@ -15,9 +15,9 @@ class Dungeon(
     )
 
     fun randomEncounter(): Monster {
-        var encounter: Monster = monsters.randomOrNull()
-            ?: throw IllegalStateException("This dungeon has no monsters.")
-        for (i in 0..Random.nextInt(level - 3, level + 4)) {
+        var ogEncounter: Monster = monsters.randomOrNull() ?: throw IllegalStateException("This dungeon has no monsters.")
+        val encounter: Monster = Monster(ogEncounter)
+        repeat(Random.nextInt(level - 3, level + 4)) {
             encounter.levelUp()
         }
         return encounter

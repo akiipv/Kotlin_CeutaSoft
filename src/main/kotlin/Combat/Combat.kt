@@ -12,7 +12,7 @@ class Combat() {
         val treasures: ArrayList<Equipment> = loadTreasures()
 
         fun combat(player: Character, CPU: Character): Equipment {
-            println("₊˚ ‿︵‿︵‿︵୨୧ · · ♡ · · ୨୧‿︵‿︵‿︵ ˚₊")
+            println("\n₊˚ ‿︵‿︵‿︵୨୧ · · ♡ · · ୨୧‿︵‿︵‿︵ ˚₊")
             if (!CombatLogManager.hasLogStarted()) CombatLogManager.startLog("${player.name} vs ${CPU.name}")
             CombatLogManager.out("The showdown between ${player.name} and ${CPU.name}... BEGINS .ᐟ.ᐟ")
             var c1: Character
@@ -59,8 +59,8 @@ class Combat() {
                     CPU.removeFirst()
                 } else players.removeFirst()
             }
-            if (players.isEmpty()) CombatLogManager.out("\n\t${playerLeader.getClassName()}'s party was wiped out from existence.")
-            else CombatLogManager.out("\n\t${playerLeader.getClassName()}'s party was victorious!")
+            if (players.isEmpty()) CombatLogManager.out(CombatUI.cursiveText("\n\t${playerLeader.getClassName()}'s party was wiped out from existence."))
+            else CombatLogManager.out(CombatUI.cursiveText("\n\t${playerLeader.getClassName()}'s party was victorious!"))
             return prize
         }
 

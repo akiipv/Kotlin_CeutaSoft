@@ -27,7 +27,7 @@ data class Stats(
         this.res = (this.res * 0.8).roundToInt()
     }
 
-    fun getStat(stat: String): Int = when (stat) {
+    fun getStat(stat: String): Int = when (stat.lowercase()) {
         "hp" -> hp
         "atk" -> atk
         "arm" -> arm

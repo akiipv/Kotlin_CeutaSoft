@@ -14,13 +14,15 @@ class Paladin(
     name: String = "",
     race: String = "",
     lvl: Int = 0,
-    stats: Stats = Stats(),
+    stats: Stats = initializeStats(),
     isDefending: Boolean = false,
     isCPU: Boolean = false,
     weapon: Weapon? = null,
     armor: HashMap<String, Armor> = HashMap(),
     heirlooms: ArrayList<Heirloom> = ArrayList()
 ) : Faithful(name, race, lvl, stats, isDefending, isCPU, weapon, armor, heirlooms) {
+
+    companion object { fun initializeStats(): Stats = Stats(120, 10, 15, 5, 8, 0, 10) }
 
     constructor(other: Paladin) : this(
         other.name,
@@ -46,7 +48,6 @@ class Paladin(
         if (r.nextInt(0, 100) >= 70) stats.fth += 3
     }
 
-    override fun initializeStats(): Stats = Stats(120, 10, 15, 5, 8, 0, 10)
     override fun isWeaponValid(w: Weapon): Boolean = w.type !in setOf("Bow", "Staff")
     override fun isArmorValid(a: Armor): Boolean = a.type == "Metal"
 

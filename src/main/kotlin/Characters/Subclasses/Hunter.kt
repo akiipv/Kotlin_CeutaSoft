@@ -25,9 +25,8 @@ class Hunter(
 
     var pet: AnimalCompanion
 
-    init {
-        pet = AnimalCompanion(petName, petRace, isCPU = true)
-    }
+    init { pet = AnimalCompanion(petName, petRace, lvl, isCPU = true) }
+    companion object { fun initializeStats(): Stats = Stats(100, 10, 10, 12, 10) }
 
     constructor(other: Hunter) : this(
         other.name,
@@ -63,7 +62,6 @@ class Hunter(
         if (r.nextInt(0, 100) >= 60) stats.res += 1
     }
 
-    override fun initializeStats(): Stats = Stats(100, 10, 10, 12, 10)
     override fun displaySpecialAction(): String = "2. Cheer on your pet."
 
     override fun performSpecialAction(): Attack {
@@ -82,6 +80,7 @@ class Hunter(
         isCPU: Boolean = false
     ) : Character(name, race, lvl, stats, false, isCPU) {
 
+        init { this.stats = updateStats() }
         override fun equipHeirloom(heirloom: Heirloom): Boolean = if (heirloom.type != "Amulet") false
         else super.equipHeirloom(heirloom)
 
@@ -89,7 +88,7 @@ class Hunter(
             stats = updateStats()
         }
 
-        override fun initializeStats(): Stats = updateStats()
+        fun initializeStats(): Stats = updateStats()
         override fun displaySpecialAction(): String = ""
         override fun performSpecialAction(): Attack = Attack(0, "STA")
         override fun isWeaponValid(w: Weapon): Boolean = false

@@ -16,13 +16,15 @@ class Thief(
     name: String = "",
     race: String = "",
     lvl: Int = 0,
-    stats: Stats = Stats(),
+    stats: Stats = initializeStats(),
     isDefending: Boolean = false,
     isCPU: Boolean = false,
     weapon: Weapon? = null,
     armor: HashMap<String, Armor> = HashMap(),
     heirlooms: ArrayList<Heirloom> = ArrayList()
 ) : Character(name, race, lvl, stats, isDefending, isCPU, weapon, armor, heirlooms) {
+
+    companion object { fun initializeStats(): Stats = Stats(90, 12, 8, 15, 8) }
 
     constructor(other: Thief) : this(
         other.name,
@@ -47,7 +49,6 @@ class Thief(
         if (r.nextInt(0, 100) >= 60) stats.res += 1
     }
 
-    override fun initializeStats(): Stats = Stats(90, 12, 8, 15, 8)
     override fun displaySpecialAction(): String = "2. Steal."
 
     override fun performSpecialAction(): Attack {

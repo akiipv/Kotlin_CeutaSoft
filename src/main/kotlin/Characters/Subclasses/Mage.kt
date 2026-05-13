@@ -12,13 +12,15 @@ class Mage(
     name: String = "",
     race: String = "",
     lvl: Int = 0,
-    stats: Stats = Stats(),
+    stats: Stats = initializeStats(),
     isDefending: Boolean = false,
     isCPU: Boolean = false,
     weapon: Weapon? = null,
     armor: HashMap<String, Armor> = HashMap(),
     heirlooms: ArrayList<Heirloom> = ArrayList()
 ) : Character(name, race, lvl, stats, isDefending, isCPU, weapon, armor, heirlooms) {
+
+    companion object { fun initializeStats(): Stats = Stats(90, 5, 8, 10, 15, 30, 0) }
 
     constructor(other: Mage) : this(
         other.name,
@@ -64,8 +66,6 @@ class Mage(
         if (r.nextInt(0, 100) >= 20) stats.res += 1
         if (r.nextInt(0, 100) >= 15) stats.mag += 3
     }
-
-    override fun initializeStats(): Stats = Stats(90, 5, 8, 10, 15, 30, 0)
 
     override fun displaySpecialAction(): String = "2. Cast a spell"
 
