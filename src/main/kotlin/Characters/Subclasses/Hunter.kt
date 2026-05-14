@@ -19,8 +19,8 @@ class Hunter(
     weapon: Weapon? = null,
     armor: HashMap<String, Armor> = HashMap(),
     heirlooms: ArrayList<Heirloom> = ArrayList(),
-    petName: String = "",
-    petRace: String = "",
+    petName: String = "Pet",
+    petRace: String = "Canid",
 ) : Character(name, race, lvl, stats, isDefending, isCPU, weapon, armor, heirlooms) {
 
     var pet: AnimalCompanion

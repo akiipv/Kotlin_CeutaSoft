@@ -57,7 +57,8 @@ fun main() {
     )
 
     Database.connect()
-    CharacterDB.addCharacter(hunter)
+    CharacterDB.addCharacter(mage)
+    Database.disconnect()
 
     /*var list = arrayListOf<Character>(hunter, priest, mage)
 

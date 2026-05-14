@@ -12,10 +12,12 @@ object Database {
     var connection: Connection? = null
 
     fun connect() {
+        println("Connected to database")
         connection = DriverManager.getConnection(URL, USER, PASSWORD)
     }
 
     fun disconnect() {
+        println("Disconnected from database")
         connection?.close()
         connection = null
     }

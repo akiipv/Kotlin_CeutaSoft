@@ -8,7 +8,7 @@ class GameLogger {
         val defaultDirectory: File = File("./src/main/OutputFiles")
 
         fun readCharacter(characterSheet: File): Character {
-            var data = MutableList(11) { " " }
+            var data = Array(11) { " " }
             var i = 0
 
             BufferedReader(FileReader(characterSheet)).use { br ->
@@ -19,7 +19,7 @@ class GameLogger {
                         i++
                     }
                 }
-                return CharacterFactory.createfromDataArray(data)
+                return CharacterFactory.createfromDataArray(data)!!
             }
         }
 
