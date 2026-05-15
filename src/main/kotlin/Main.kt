@@ -6,22 +6,23 @@ import org.example.Characters.Stats
 import org.example.Characters.Subclasses.*
 import org.example.Combat.Combat
 import org.example.Deco.CombatUI
+import org.example.Equipment.Armor
 import org.example.GameModes.Gauntlet
 import java.io.File
 
 fun main() {
 
     val mage = Mage(
-        name = "Aldric",
-        race = "Human",
+        name = "Christian",
+        race = "Fairy",
         lvl = 5,
         stats = Stats(
-            hp = 100,
-            atk = 10,
-            arm = 5,
-            spd = 12,
-            res = 15,
-            mag = 30
+            hp = 113,
+            atk = 1,
+            arm = 6,
+            spd = 6,
+            res = 6,
+            mag = 99
         ),
         isCPU = false
     )
@@ -57,7 +58,8 @@ fun main() {
     )
 
     Database.connect()
-    CharacterDB.addCharacter(mage)
+    val equip = Combat.treasures
+    ItemDB.addItem(equip)
     Database.disconnect()
 
     /*var list = arrayListOf<Character>(hunter, priest, mage)

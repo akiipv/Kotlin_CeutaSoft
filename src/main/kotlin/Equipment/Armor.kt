@@ -3,12 +3,12 @@ package org.example.Equipment
 import org.example.Characters.Stats
 
 class Armor(
-    name: String = "",
+    name: String = "Armor",
     equipmentStats: Stats = Stats(),
-    rarity: String = "",
-    value: Int = -1,
-    type: String = "",
-    piece: String = ""
+    rarity: String = "Common",
+    value: Int = 1,
+    type: String = "Leather",
+    piece: String = "Boots"
 ) : Equipment(name, equipmentStats, rarity, value) {
 
     constructor(other: Armor) : this(

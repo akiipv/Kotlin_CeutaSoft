@@ -4,12 +4,12 @@ import org.example.Characters.Stats
 import kotlin.collections.setOf
 
 class Weapon(
-    name: String = "",
+    name: String = "Weapon",
     equipmentStats: Stats = Stats(),
-    rarity: String = "",
-    value: Int = -1,
-    type: String = "",
-    hands: Int = -1
+    rarity: String = "Common",
+    value: Int = 1,
+    type: String = "Sword",
+    hands: Int = 1
 ) : Equipment(name, equipmentStats, rarity, value) {
 
     constructor(other: Weapon) : this(
@@ -32,7 +32,7 @@ class Weapon(
         }
 
     var hands: Int = hands
-        get() = when (type) {
+        get() = when (type.lowercase()) {
             "sword", "mace", "axe", "scepter", "dagger" -> 1
             "greatsword", "hammer", "bow", "staff" -> 2
             else -> 0

@@ -25,7 +25,8 @@ class Dungeon(
 
     fun randomFight(): ArrayList<Monster> {
         var encounters = ArrayList<Monster>()
-        for (i in 0..Random.nextInt(1, 4)) {
+        // TODO Investigar map, foreach, filter || funcion lambda
+        (0..Random.nextInt(1, 4)).toList().forEach {
             encounters.add(randomEncounter())
         }
         return encounters

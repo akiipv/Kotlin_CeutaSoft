@@ -25,7 +25,8 @@ object CharacterDB {
             return true
         } catch (e: SQLIntegrityConstraintViolationException) {
             System.err.println("Character already exists.")
-            return false
+            Database.connection!!.rollback()
+            e.printStackTrace()
         } catch (e: Exception) {
             System.err.println("There's been an error adding the character.")
             Database.connection!!.rollback()
@@ -33,6 +34,32 @@ object CharacterDB {
         } finally { Database.connection!!.autoCommit = true }
         return false
     }
+
+    /*
+    fun updateCharacterById(id: Int, newCharacter: Character): Boolean {
+        try {
+            Database.connection!!.autoCommit = false
+            val query = "update Characters set className = ?, name = ?, race = ?, lvl = ?, isCPU = ?, idStats = ? where id = ?"
+            val ps: PreparedStatement = Database.connection!!.prepareStatement(query)
+
+            ps.setString(1, newCharacter.getClassName())
+            ps.setString(2, newCharacter.name)
+            ps.setString(3, newCharacter.race)
+            ps.setInt(4, newCharacter.lvl)
+            ps.setBoolean(5, newCharacter.isCPU)
+            ps.setInt(6, statsLoader(newCharacter))
+            ps.setInt(7, id)
+
+            ps.executeUpdate()
+            Database.connection!!.commit()
+            return true
+        } catch (e: Exception) {
+            System.err.println("Error while updating characters.")
+            Database.connection!!.rollback()
+            e.printStackTrace()
+            return  false
+        } finally { Database.connection!!.autoCommit = true }
+    }*/
 
     fun getCharacterById(id: Int): Character? {
         try {

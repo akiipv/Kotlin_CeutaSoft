@@ -3,11 +3,11 @@ package org.example.Equipment
 import org.example.Characters.Stats
 
 class Heirloom(
-    name: String = "",
+    name: String = "Heirloom",
     equipmentStats: Stats = Stats(),
-    rarity: String = "",
-    value: Int = -1,
-    type: String = ""
+    rarity: String = "Common",
+    value: Int = 1,
+    type: String = "Ring"
 ) : Equipment(name, equipmentStats, rarity, value) {
 
     constructor(other: Heirloom) : this(
