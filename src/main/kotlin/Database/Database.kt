@@ -134,8 +134,7 @@ object Database {
                     key `fk_Combat_players_2_idx` (`playerId`),
                     key `fk_Combat_players_3_idx` (`side`),
                     constraint `fk_Combat_players_1` foreign key (`combatId`) references `Combat` (`idCombat`),
-                    constraint `fk_Combat_players_2` foreign key (`playerId`) references `Characters` (`id`),
-                    constraint `fk_Combat_players_3` foreign key (`side`) references `Combat` (`winner`)
+                    constraint `fk_Combat_players_2` foreign key (`playerId`) references `Characters` (`id`)
                 ) engine=innodb default charset=utf8mb4 collate=utf8mb4_0900_ai_ci
                 """.trimIndent()
             )

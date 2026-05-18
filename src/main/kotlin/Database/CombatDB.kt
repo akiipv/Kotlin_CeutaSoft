@@ -27,14 +27,14 @@ object CombatDB {
     }
 
     private fun combatLoader(winnerSide: String, prize: Equipment): Int {
-        val prizeId = ItemDB.getItemId(prize) ?: throw Exception("Prize not found.")
+        val prizeId = ItemDB.getItemId(prize)
         val query = "insert into Combat(prizeId, winner, date) values (?, ?, now())"
         Database.connection!!.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).use { ps ->
             ps.setInt(1, prizeId)
             ps.setString(2, winnerSide)
             ps.executeUpdate()
 
-            ps.generatedKeys.use { key -> return if (key.next()) key.getInt(1) else 0 }
+            ps.generatedKeys.use { key -> return if (key.next()) key.getInt("idCombat") else throw Exception("Combat insert failed.") }
         }
     }
 
